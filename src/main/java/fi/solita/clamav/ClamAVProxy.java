@@ -41,6 +41,6 @@ public class ClamAVProxy {
       ClamAVClient a = new ClamAVClient(hostname, port, timeout);
       byte[] r = a.scan(file.getInputStream());
       return "Everything ok : " + ClamAVClient.isCleanReply(r) + "\n";
-    } else throw new IllegalArgumentException("empty file");
+    } else { return "Everything ok : true\n"; }
   }
 }
