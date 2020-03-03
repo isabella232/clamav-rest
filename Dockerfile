@@ -9,12 +9,12 @@ FROM centos:centos7
 
 MAINTAINER lokori <antti.virtanen@iki.fi>
 
-RUN yum update -y && yum install -y java-1.8.0-openjdk &&  yum install -y java-1.8.0-openjdk-devel && yum clean all
+RUN yum update -y && yum install -y java-1.8.0-openjdk &&  yum install -y java-1.8.0-openjdk-devel && yum install -y iproute && yum clean all
 
 # Set environment variables.
 ENV HOME /root
 
-# Get the JAR file 
+# Get the JAR file
 RUN mkdir /var/clamav-rest
 COPY --from=0 /target/clamav-rest-1.0.2.jar /var/clamav-rest/clamav-rest-1.0.2.jar
 #COPY target/clamav-rest-1.0.2.jar /var/clamav-rest/

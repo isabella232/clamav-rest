@@ -2,7 +2,7 @@
 set -m
 
 if [ -z "${CLAMD_HOST}" ]; then
-    host=$(netstat -nr | grep '^0\.0\.0\.0' | awk '{print $2}')
+    host=$(ip route show default | awk '/default/ {print $3}')
 else
     host="${CLAMD_HOST}"
 fi
@@ -14,4 +14,3 @@ echo "using clamd server: ${host}:${port}"
 # start in background
 
 java -jar /var/clamav-rest/clamav-rest-1.0.2.jar --clamd.host="${host}" --clamd.port="${port}"
-
