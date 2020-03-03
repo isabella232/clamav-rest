@@ -1,10 +1,11 @@
-FROM maven:alpine as jar
+#0
+FROM maven:latest as builder
+COPY . .
+RUN mvn install -DskipTests
+RUN find / | grep clamav-rest-.*.jar
 
-COPY . /usr/src/app
-
-RUN  cd /usr/src/app && mvn package  -Dmaven.test.skip=true
-
-FROM centos:6
+#1
+FROM centos:centos7
 
 MAINTAINER lokori <antti.virtanen@iki.fi>
 
@@ -13,9 +14,10 @@ RUN yum update -y && yum install -y java-1.8.0-openjdk &&  yum install -y java-1
 # Set environment variables.
 ENV HOME /root
 
-# Get the JAR file
-CMD mkdir /var/clamav-rest
-COPY --from=jar /usr/src/app/target/clamav-rest-1.0.2.jar /var/clamav-rest/
+# Get the JAR file 
+RUN mkdir /var/clamav-rest
+COPY --from=0 /target/clamav-rest-1.0.2.jar /var/clamav-rest/clamav-rest-1.0.2.jar
+#COPY target/clamav-rest-1.0.2.jar /var/clamav-rest/
 
 # Define working directory.
 WORKDIR /var/clamav-rest/
