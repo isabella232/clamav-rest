@@ -8,7 +8,7 @@ else
 fi
 
 port="${CLAMD_PORT:-3310}"
-filesize="${MAXSIZE:-10GB}"
+filesize="${MAXSIZE:-10240MB}"
 
 echo "using clamd server: ${host}:${port}"
 
